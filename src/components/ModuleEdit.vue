@@ -1,84 +1,5 @@
-<style scoped>
-.layout {
-  border: 1px solid #d7dde4;
-  background: #f5f7f9;
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.layout-logo {
-  width: 100px;
-  height: 30px;
-  background: #5b6270;
-  border-radius: 3px;
-  float: left;
-  position: relative;
-  top: 15px;
-  left: 20px;
-}
-.layout-nav {
-  width: 420px;
-  margin: 0 auto;
-  margin-right: 20px;
-}
-</style>
 <template>
-  <div class="layout">
-    <Layout>
-      <Header>
-        <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
-          <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>模块
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>Item 4
-            </MenuItem>
-          </div>
-        </Menu>
-      </Header>
-      <Layout>
-        <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu v-bind:active-name="activeName" theme="light" width="auto" :open-names="['1']">
-            <Submenu name="1">
-              <template slot="title">
-                <Icon type="ios-navigate"></Icon>产品管理
-              </template>
-              <MenuItem name="1-1"><router-link :to="{ name: 'LanguageView'}">Key列表</router-link></MenuItem>
-              <MenuItem name="1-2">创建产品</MenuItem>
-              <MenuItem name="1-3">创建Key</MenuItem>
-              <MenuItem name="1-4">字串管理</MenuItem>
-            </Submenu>
-            <Submenu name="2">
-              <template slot="title">
-                <Icon type="ios-keypad"></Icon>Item 2
-              </template>
-              <MenuItem name="2-1">Option 1</MenuItem>
-              <MenuItem name="2-2">Option 2</MenuItem>
-            </Submenu>
-            <Submenu name="3">
-              <template slot="title">
-                <Icon type="ios-analytics"></Icon>Item 3
-              </template>
-              <MenuItem name="3-1">Option 1</MenuItem>
-              <MenuItem name="3-2">Option 2</MenuItem>
-            </Submenu>
-          </Menu>
-        </Sider>
-        <Layout :style="{padding: '0 24px 24px'}">
-          <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>产品管理</BreadcrumbItem>
-            <BreadcrumbItem>创建模块</BreadcrumbItem>
-          </Breadcrumb>
-          <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
-
+ 
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
 
                 <FormItem label="产品" prop="productId">
@@ -103,14 +24,6 @@
                     <Button @click="handleReset('formValidate')" style="margin-left: 8px">清空</Button>
                 </FormItem>
             </Form>
-
-
-
-          </Content>
-        </Layout>
-      </Layout>
-    </Layout>
-  </div>
 </template>
 <script>
 import axios from "axios";
@@ -128,7 +41,6 @@ export default {
                     desc: ''
                 },
                 productList:[],
-                activeName:'1-2',
                 ruleValidate: {
                     name: [
                         { required: true, message: 'The name cannot be empty', trigger: 'blur' }
@@ -189,7 +101,7 @@ export default {
         },
         mounted: function() {
             
-        
+            this.$refs.LeftMenuTemplate.activeName='1-2';
             const self = this;
 
             axios.post(

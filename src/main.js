@@ -4,19 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import VueResource from 'vue-resource'
+// import VueResource from 'vue-resource'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
 import Hello12 from './components/Hello'
 
-Vue.use(VueResource);
+// Vue.use(VueResource);
 Vue.use(iView);
 Vue.use(Hello12);
 
-Vue.component('LeftMenuTemplate',{
-  template: '#LeftMenuTemplate'
-})
 
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios

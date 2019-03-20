@@ -9,13 +9,13 @@
       <row></row>
       <row></row>
     </ol>
-    <LeftMenuTemplate></LeftMenuTemplate>
+    <!-- <LeftMenuTemplate></LeftMenuTemplate> -->
   </div>
 </template>
 
 <script>
 import Vue from "vue"
-import LeftMenuTemplate from "leftMenuTemplate"
+// import LeftMenuTemplate from "leftMenuTemplate"
 
 Vue.component('row',{
   data:function(){

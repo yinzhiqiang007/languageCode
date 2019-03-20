@@ -85,7 +85,7 @@
             </tr>
           </tbody>
         </table>
-        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'ModuleEdit'}">创建产品</router-link></button>
+        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'ModuleEdit'}">创建模块</router-link></button>
         <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'KeyEdit'}">创建Key</router-link></button>
         <div class="btn-group btn-group-lg">
           <button class="btn btn-default" type="button">
