@@ -11,6 +11,13 @@
                 <FormItem label="模块" prop="name">
                     <Input v-model="formValidate.name" placeholder="Enter your module"></Input>
                 </FormItem>
+
+                <FormItem label="模块" prop="name" style="margin-left: 1px">
+                    <span style="margin-left: 1px">123水电费</span>
+                  
+                </FormItem>
+
+
                 <FormItem label="版本" prop="version">
                     <Input v-model="formValidate.version" placeholder="请输入版本号" number></Input>
                 </FormItem>

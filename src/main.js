@@ -8,12 +8,10 @@ import axios from 'axios'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
-import Hello12 from './components/Hello'
-
 // Vue.use(VueResource);
 Vue.use(iView);
-Vue.use(Hello12);
 
+axios.defaults.baseURL = "http://localhost:8081/iot/"
 
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios

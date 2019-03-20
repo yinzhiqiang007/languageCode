@@ -138,7 +138,7 @@ export default {
 
       }).then(function(resp) {
         console.log(resp.data);
-        alert(resp.data.message);
+				self.$Message.success(resp.data.message);
         // self.languageCode = resp.data.data[0];
       }).catch(resp => {
         console.log("请求失败：" + resp.status + "," + resp.statusText);

@@ -137,7 +137,7 @@ export default {
   mounted: function() {
     const self = this;
     axios.post(
-        "http://localhost:8081/iot/language/languageView",
+        "/language/languageView",
         { param: "" },
         {
           headers: { "Content-Type": "application/json" }
@@ -152,7 +152,7 @@ export default {
     });
 
     axios.post(
-      "http://localhost:8081/iot/language/listByProduct"
+      "/language/listByProduct"
     )
     .then(function(resp) {
       self.productList = resp.data.data;
@@ -172,7 +172,7 @@ export default {
       const self = this;
       this.productId=id;
       axios.post(
-        "http://localhost:8081/iot/language/listByModule?productId="+id
+        "/language/listByModule?productId="+id
       )
       .then(function(resp) {
         self.moduleList = resp.data.data;
@@ -194,7 +194,7 @@ export default {
         self.moduleText = name;
       }
       axios.post(
-          "http://localhost:8081/iot/language/languageView",
+          "/language/languageView",
           { moduleId: this.moduleId,param:this.param,"productId":this.productId },
           {
             headers: { "Content-Type": "application/json" }
