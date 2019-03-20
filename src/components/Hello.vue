@@ -2,20 +2,17 @@
   <div id="example">
     <ol>
       <li>1234</li>
-      <!-- <Hello12></Hello12> -->
       <li>这是个待办项1</li>
       <li>{{message}}</li>
       <row ref="one"></row>
       <row></row>
       <row></row>
     </ol>
-    <!-- <LeftMenuTemplate></LeftMenuTemplate> -->
   </div>
 </template>
 
 <script>
 import Vue from "vue"
-// import LeftMenuTemplate from "leftMenuTemplate"
 
 Vue.component('row',{
   data:function(){
@@ -23,10 +20,6 @@ Vue.component('row',{
   },
   template: '<li>this is a row {{mmm}}</li>'
 })
-
-// var vm = new Vue({
-//   el: "#example"
-// })
 
 
 export default {

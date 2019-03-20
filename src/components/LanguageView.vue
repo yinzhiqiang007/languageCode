@@ -85,22 +85,26 @@
             </tr>
           </tbody>
         </table>
-        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'ModuleEdit'}">创建模块</router-link></button>
+        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导出字串表</router-link></button>
+        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导入字串表</router-link></button>
+
+        <!-- <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'ModuleEdit'}">创建模块</router-link></button>
         <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'KeyEdit'}">创建Key</router-link></button>
         <div class="btn-group btn-group-lg">
-          <button class="btn btn-default" type="button">
-            <em class="glyphicon glyphicon-heart"></em> 左
-          </button>
-          <button class="btn btn-default" type="button">
-            <em class="glyphicon glyphicon-align-center"></em> 中
-          </button>
-          <button class="btn btn-default" type="button">
-            <em class="glyphicon glyphicon-align-right"></em> 右
-          </button>
-          <button class="btn btn-default" type="button">
-            <em class="glyphicon glyphicon-align-justify"></em> 全
-          </button>
-        </div>
+            <button class="btn btn-default" type="button">
+              <em class="glyphicon glyphicon-heart"></em> 左
+            </button>
+            <button class="btn btn-default" type="button">
+              <em class="glyphicon glyphicon-align-center"></em> 中
+            </button>
+            <button class="btn btn-default" type="button">
+              <em class="glyphicon glyphicon-align-right"></em> 右
+            </button>
+            <button class="btn btn-default" type="button">
+              <em class="glyphicon glyphicon-align-justify"></em> 全
+            </button>
+          </div> -->
+
       </div>
     </div>
   </div>
@@ -124,7 +128,9 @@ export default {
       moduleText:"模块",
       param:"",
       productId:"",
-      moduleId:""
+      moduleId:"",
+      activeName:"1-1",
+      pathName:"Key列表",
 
     };
   },

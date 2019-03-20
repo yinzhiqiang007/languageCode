@@ -41,6 +41,7 @@ export default {
                     desc: ''
                 },
                 productList:[],
+                activeName:"1-2",
                 ruleValidate: {
                     name: [
                         { required: true, message: 'The name cannot be empty', trigger: 'blur' }
@@ -100,8 +101,8 @@ export default {
             }
         },
         mounted: function() {
-            
-            this.$refs.LeftMenuTemplate.activeName='1-2';
+            this.$router.push({name:"ModuleEdit",query:{index:1,pathName:"创建模块"}});
+
             const self = this;
 
             axios.post(

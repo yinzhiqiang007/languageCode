@@ -46,14 +46,14 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu ref="LeftMenuTemplate" v-bind:active-name="activeName" theme="light" width="auto" :open-names="['1']">
+          <Menu ref="LeftMenuTemplate" v-bind:active-name="activeName"  theme="light" width="auto" :open-names="['1']">
             <Submenu name="1">
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>产品管理
               </template>
-              <MenuItem name="1-1"><router-link :to="{ name: 'LanguageView'}">Key列表</router-link></MenuItem>
-              <MenuItem name="1-2"><router-link :to="{ name: 'ModuleEdit'}">创建模块</router-link></MenuItem>
-              <MenuItem name="1-3">创建Key</MenuItem>
+              <router-link :to="{ name: 'LanguageView'}"><MenuItem name="1-1">Key列表</MenuItem></router-link>
+              <router-link :to="{ name: 'ModuleEdit'}"><MenuItem name="1-2">创建模块</MenuItem></router-link>
+              <router-link :to="{ name: 'KeyEdit'}"><MenuItem name="1-3">创建Key</MenuItem></router-link>
             </Submenu>
             <Submenu name="2">
               <template slot="title">
@@ -74,10 +74,10 @@
         <Layout :style="{padding: '0 24px 24px'}">
           <Breadcrumb :style="{margin: '24px 0'}">
             <BreadcrumbItem>产品管理</BreadcrumbItem>
-            <BreadcrumbItem>创建模块</BreadcrumbItem>
+            <BreadcrumbItem>{{pathName}}</BreadcrumbItem>
           </Breadcrumb>
           <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
-            <router-view></router-view>
+            <router-view ref="children"></router-view>
 
           </Content>
         </Layout>
@@ -92,9 +92,15 @@ export default {
         name:'LeftMenu',
         data () {
             return {
-              activeName:"1-1"
+              activeName:"1-1",
+              pathName:"Key列表",
 
             }
+        },methods:{
+
+        },mounted:function(){
+          this.activeName = this.$refs.children.activeName;
+          this.pathName = this.$refs.children.pathName;
         }
     }
 
