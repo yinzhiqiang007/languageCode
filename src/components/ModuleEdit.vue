@@ -12,7 +12,7 @@
                     <Input v-model="formValidate.name" placeholder="Enter your module"></Input>
                 </FormItem>
                 <FormItem label="版本" prop="version">
-                    <Input v-model="formValidate.version" placeholder="Enter your module"></Input>
+                    <Input v-model="formValidate.version" placeholder="请输入版本号" number></Input>
                 </FormItem>
 
                 
@@ -38,13 +38,15 @@ export default {
                     interest: [],
                     date: '',
                     time: '',
-                    desc: ''
+                    desc: '',
+                    version: ''
                 },
                 productList:[],
                 activeName:"1-2",
                 ruleValidate: {
                     name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' },
+                        { message: '太长了',max:20, trigger: 'blur' }
                     ],
                     mail: [
                         { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
@@ -52,6 +54,9 @@ export default {
                     ],
                     productId: [
                         { required: true,type: 'number', message: 'Please select the product', trigger: 'change' }
+                    ],
+                    version: [
+                        { required: true,type: 'number',message: '请输入数字', trigger: 'blur' }
                     ],
                     gender: [
                         { required: true, message: 'Please select gender', trigger: 'change' }
@@ -67,8 +72,8 @@ export default {
                         { required: true, type: 'string', message: 'Please select time', trigger: 'change' }
                     ],
                     desc: [
-                        { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 2, message: 'Introduce no less than 2 words', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' },
+                        { type: 'string', min: 2,max:100, message: '请输入长度2-100的字符', trigger: 'blur' }
                     ]
                 }
             }

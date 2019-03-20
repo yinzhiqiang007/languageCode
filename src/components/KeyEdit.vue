@@ -8,17 +8,13 @@
                     </Select>
                 </FormItem>
 
-                <FormItem label="Key" prop="name">
-                    <Input v-model="formValidate.name" placeholder="Enter your module"></Input>
+                <FormItem label="Key" prop="code">
+                    <Input v-model="formValidate.code" placeholder="请输入key"></Input>
                 </FormItem>
-                <FormItem label="版本" prop="version">
-                    <Input v-model="formValidate.version" placeholder="Enter your module"></Input>
+                <FormItem label="描述" prop="name">
+                    <Input v-model="formValidate.name" placeholder="说点什么吧"></Input>
                 </FormItem>
 
-                
-                <FormItem label="Desc" prop="desc">
-                    <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-                </FormItem>
                 <FormItem>
                     <Button type="primary" @click="handleSubmit('formValidate')">创建</Button>
                     <Button @click="handleReset('formValidate')" style="margin-left: 8px">清空</Button>
@@ -32,6 +28,7 @@ export default {
             return {
                 formValidate: {
                     name: '',
+                    code: '',
                     mail: '',
                     moduleId: '',
                     gender: '',
@@ -44,11 +41,12 @@ export default {
                 activeName:"1-3",
                 ruleValidate: {
                     name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' },
+                        { message: '太长了',max:20, trigger: 'blur' }
                     ],
-                    mail: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-                        { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
+                    code: [
+                        { required: true, message: '不能为空',max:20, trigger: 'blur' },
+                        { message: '太长了',max:20, trigger: 'blur' }
                     ],
                     moduleId: [
                         { required: true,type: 'number', message: 'Please select the product', trigger: 'change' }
@@ -81,7 +79,7 @@ export default {
                         console.log(this.formValidate);
                         axios({
                             method: 'post',
-                            url:"http://localhost:8081/iot/language/addModule",
+                            url:"http://localhost:8081/iot/language/addPositionCode",
                             params: this.formValidate
                         }).then(function(resp) {
                             console.log(resp.data);

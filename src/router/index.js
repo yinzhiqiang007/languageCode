@@ -39,11 +39,11 @@ export default new Router({
           name: 'ModuleEdit',
           component: ModuleEdit
         },
-        {
-          path: '/leftMenu',
-          name: 'LeftMenu',
-          component: LeftMenu
-        },
+        // {
+        //   path: '/leftMenu',
+        //   name: 'LeftMenu',
+        //   component: LeftMenu
+        // },
         {
           path: '/hello',
           name: 'Hello',
