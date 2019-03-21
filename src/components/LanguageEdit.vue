@@ -3,13 +3,13 @@
   <div class="form-group">
 		<label for="firstname" class="col-sm-2 control-label">产品</label>
 		<div class="col-sm-2">
-			<label for="firstname" class="col-sm-2 control-label">{{languageCode.productName}}</label>
+			<label for="firstname" class="col-sm-4 control-label" style="text-align:left">{{languageCode.productName}}</label>
 		</div>
 	</div>
   <div class="form-group">
-		<label for="firstname" class="col-sm-2 control-label">模块</label>
+		<label for="firstname" class="col-sm-2 control-label" >模块</label>
 		<div class="col-sm-2">
-			<label for="firstname" class="col-sm-2 control-label">{{languageCode.moduleName}}</label>
+			<label for="firstname" class="col-sm-6 control-label" style="text-align:left">{{languageCode.moduleName}}</label>
 		</div>
 	</div>
   <div class="form-group">
@@ -87,7 +87,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "LanguageCode",
+  name: "LanguageEdit",
   data() {
     return {
       msg: "Welcome to Your Vue.js App",

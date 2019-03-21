@@ -51,9 +51,10 @@
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>产品管理
               </template>
-              <router-link :to="{ name: 'LanguageView'}"><MenuItem name="1-1">Key列表</MenuItem></router-link>
-              <router-link :to="{ name: 'ModuleEdit'}"><MenuItem name="1-2">创建模块</MenuItem></router-link>
-              <router-link :to="{ name: 'KeyEdit'}"><MenuItem name="1-3">创建Key</MenuItem></router-link>
+              <router-link :to="{ name: 'LanguageView'}"><MenuItem name="1-1">字串列表</MenuItem></router-link>
+              <router-link :to="{ name: 'AddProduct'}"><MenuItem name="1-2">创建产品</MenuItem></router-link>
+              <router-link :to="{ name: 'KeyList'}"><MenuItem name="1-3">Key列表</MenuItem></router-link>
+              <!-- <router-link :to="{ name: 'AddKey'}"><MenuItem name="1-5">创建Key</MenuItem></router-link> -->
             </Submenu>
             <Submenu name="2">
               <template slot="title">

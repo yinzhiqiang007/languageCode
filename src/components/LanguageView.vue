@@ -45,6 +45,17 @@
               <button type="button" class="btn btn-default" @click="checkCode(null,null)" >查询</button>
             </form>
 
+
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <router-link target="_blank" :to="{ name: 'LanguageAdd'}">创建字串</router-link>
+              </li>
+            </ul>
+
+
+
+
+
           </div>
         </nav>
 
@@ -54,14 +65,8 @@
             <tr>
               <th class=" text-center">Key</th>
               <th class=" text-center">产品</th>
-              <th class=" text-center">模块</th>
-              <th class=" text-center">CN</th>
-              <th class=" text-center">EN</th>
-              <th class=" text-center">IT</th>
-              <th class=" text-center">TW</th>
-              <th class=" text-center">EU</th>
-              <th class=" text-center">ES</th>
-              <th class=" text-center">HK</th>
+
+              <th  v-for="item in titleList" class=" text-center">{{item.name}}</th>
               <th class=" text-center">编辑</th>
             </tr>
           </thead>
@@ -69,14 +74,14 @@
             <tr v-for="item in list">
               <td>{{item.positionKey}}</td>
               <td>{{item.productName}}</td>
-              <td>{{item.moduleName}}</td>
-              <td>{{item.cn}}</td>
-              <td>{{item.en}}</td>
+
+              <td   v-for="titleItem in titleList"  >{{item[titleItem.key]}}</td>
+              <!-- <td>{{item.en}}</td>
               <td>{{item.it}}</td>
               <td>{{item.tw}}</td>
               <td>{{item.eu}}</td>
               <td>{{item.es}}</td>
-              <td>{{item.hk}}</td>
+              <td>{{item.hk}}</td> -->
               <td>
               <router-link target="_blank" :to="{ name: 'LanguageEdit', params: { id: item.id }}">编辑</router-link>
               </td>
@@ -85,6 +90,7 @@
             </tr>
           </tbody>
         </table>
+        <!-- <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator /> -->
         <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导出字串表</router-link></button>
         <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导入字串表</router-link></button>
 
@@ -113,6 +119,7 @@
 <script>
 import axios from "axios";
 export default {
+  
   name: "HelloWorld",
   data() {
     return {
@@ -122,6 +129,7 @@ export default {
         age: 100
       },
       list: [],
+      titleList: [],
       productList:[],
       moduleList:[],
       productText:"产品",
@@ -131,6 +139,9 @@ export default {
       moduleId:"",
       activeName:"1-1",
       pathName:"Key列表",
+      current:1,
+      pageSize:10,
+      total:0,
 
     };
   },
@@ -145,7 +156,9 @@ export default {
       )
       .then(function(resp) {
         console.log(resp.data.data);
-        self.list = resp.data.data;
+        self.list = resp.data.data.data;
+        self.titleList = resp.data.data.title;
+        self.total = self.list.length
       })
       .catch(resp => {
         console.log("请求失败：" + resp.status + "," + resp.statusText);
@@ -163,27 +176,29 @@ export default {
     });
   },
   methods: {
-
-    getUrl(u,v){
-      return u+v;
+    ddddd(index){
+      this.current= index;
+    },
+    aaaaa(index){
+      this.pageSize= index;
     },
 
-    checkModule(id,name){
-      const self = this;
-      this.productId=id;
-      axios.post(
-        "/language/listByModule?productId="+id
-      )
-      .then(function(resp) {
-        self.moduleList = resp.data.data;
-        console.log(self.moduleList);
-        self.productText = name;
+    // checkModule(id,name){
+    //   const self = this;
+    //   this.productId=id;
+    //   axios.post(
+    //     "/language/listByModule?productId="+id
+    //   )
+    //   .then(function(resp) {
+    //     self.moduleList = resp.data.data;
+    //     console.log(self.moduleList);
+    //     self.productText = name;
         
-      })
-      .catch(resp => {
-        console.log("请求失败：" + resp.status + "," + resp.statusText);
-      });
-    },
+    //   })
+    //   .catch(resp => {
+    //     console.log("请求失败：" + resp.status + "," + resp.statusText);
+    //   });
+    // },
     checkCode(id,name){
       const self = this;
       if(id != null){
@@ -208,11 +223,8 @@ export default {
           console.log("请求失败：" + resp.status + "," + resp.statusText);
       });
 
-    },
-    
-    send() {
-      
     }
+    
   }
 };
 </script>

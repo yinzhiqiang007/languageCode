@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LanguageView from '@/components/LanguageView.vue'
 import LanguageEdit from '@/components/LanguageEdit.vue'
-import KeyEdit from '@/components/KeyEdit.vue'
-import ModuleEdit from '@/components/ModuleEdit.vue'
+import AddKey from '@/components/AddKey.vue'
+import AddProduct from '@/components/AddProduct.vue'
 import LeftMenu from '@/components/LeftMenu.vue'
 import Hello from '@/components/Hello.vue'
+import KeyList from '@/components/KeyList.vue'
+import LanguageAdd from '@/components/LanguageAdd.vue'
 
 Vue.use(Router)
 
@@ -22,7 +24,11 @@ export default new Router({
           path: '/',
           name: 'LanguageView',
           component: LanguageView
-          
+        },
+        {
+          path: '/languageAdd',
+          name: 'LanguageAdd',
+          component: LanguageAdd
         },
         {
           path: '/languageEdit/:id',
@@ -30,24 +36,24 @@ export default new Router({
           component: LanguageEdit
         },
         {
-          path: '/keyEdit',
-          name: 'KeyEdit',
-          component: KeyEdit
+          path: '/addKey',
+          name: 'AddKey',
+          component: AddKey
         },
         {
-          path: '/moduleEdit',
-          name: 'ModuleEdit',
-          component: ModuleEdit
+          path: '/addProduct',
+          name: 'AddProduct',
+          component: AddProduct
         },
-        // {
-        //   path: '/leftMenu',
-        //   name: 'LeftMenu',
-        //   component: LeftMenu
-        // },
         {
           path: '/hello',
           name: 'Hello',
           component: Hello
+        },
+        {
+          path: '/keyList',
+          name: 'KeyList',
+          component: KeyList
         }
       ]
     }
