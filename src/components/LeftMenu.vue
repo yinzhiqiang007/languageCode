@@ -46,7 +46,7 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu ref="LeftMenuTemplate" v-bind:active-name="activeName"  theme="light" width="auto" :open-names="['1']">
+          <Menu ref="LeftMenuTemplate" v-bind:active-name="activeName"  theme="light" width="auto" :open-names="['1']" @on-select="checkMenu">
             <Submenu name="1">
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>产品管理
@@ -98,6 +98,17 @@ export default {
 
             }
         },methods:{
+          checkMenu(e){
+            if(e=="1-1"){
+              this.pathName="字串列表";
+            }else if(e=="1-2"){
+              this.pathName="创建产品";
+            }else if(e=="1-3"){
+              this.pathName="Key列表";
+            }
+           
+
+          }
 
         },mounted:function(){
           this.activeName = this.$refs.children.activeName;

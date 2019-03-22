@@ -19,12 +19,12 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li v-for="item in productList">
-                    <a href="javascript:void(0)" @click="checkModule(item.id,item.name)"   >{{item.name}}</a>
+                    <a href="javascript:void(0)" @click="checkCode(item.id,item.name)"   >{{item.name}}</a>
                   </li>
                 </ul>
               </li>
 
-              <li class="dropdown">
+              <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   {{moduleText}}
                   <strong class="caret"></strong>
@@ -35,7 +35,8 @@
                   </li>
   
                 </ul>
-              </li>
+              </li> -->
+
             </ul>
 
             <form class="navbar-form navbar-left" role="search">
@@ -122,12 +123,9 @@ export default {
       list: [],
       titleList: [],
       productList:[],
-      moduleList:[],
       productText:"产品",
-      moduleText:"模块",
       param:"",
       productId:"",
-      moduleId:"",
       activeName:"1-1",
       pathName:"Key列表",
       current:1,
@@ -154,7 +152,7 @@ export default {
         console.log(resp.data.data);
         self.list = resp.data.data.data;
         self.titleList = resp.data.data.title;
-        self.total = self.list.length
+        // self.total = self.list.length
       })
       .catch(resp => {
         console.log("请求失败：" + resp.status + "," + resp.statusText);
@@ -180,23 +178,25 @@ export default {
     },
     checkCode(id,name){
       const self = this;
-      if(id != null){
-        this.moduleId=id;
+
+      if(id !=null ){
+        self.productId = id;
       }
-      
       if(name!=null){
-        self.moduleText = name;
+        self.productText = name;
       }
       axios.post(
           "/language/languageView",
-          { moduleId: this.moduleId,param:this.param,"productId":this.productId },
+          { param:self.param,"productId":self.productId },
           {
             headers: { "Content-Type": "application/json" }
           }
         )
         .then(function(resp) {
           console.log(resp.data.data);
-          self.list = resp.data.data;
+          // self.list = resp.data.data;
+          self.list = resp.data.data.data;
+          // self.titleList = resp.data.data.title;
         })
         .catch(resp => {
           console.log("请求失败：" + resp.status + "," + resp.statusText);
