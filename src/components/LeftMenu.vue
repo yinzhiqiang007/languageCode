@@ -101,7 +101,7 @@ export default {
 
         },mounted:function(){
           this.activeName = this.$refs.children.activeName;
-          // this.pathName = this.$refs.children.pathName;
+          this.pathName = this.$route.query.pathName;
         }
     }
 

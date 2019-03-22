@@ -31,7 +31,7 @@ export default new Router({
           component: LanguageAdd
         },
         {
-          path: '/languageEdit/:id',
+          path: '/languageEdit/:positionKey/:productName',
           name: 'LanguageEdit',
           component: LanguageEdit
         },

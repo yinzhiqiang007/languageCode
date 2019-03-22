@@ -1,151 +1,174 @@
 <template>
-  <form class="form-horizontal" role="form" @submit.prevent="updateCode" >
-  <div class="form-group">
-		<label for="firstname" class="col-sm-2 control-label">产品</label>
-		<div class="col-sm-2">
-			<label for="firstname" class="col-sm-4 control-label" style="text-align:left">{{languageCode.productName}}</label>
-		</div>
-	</div>
-  <div class="form-group">
-		<label for="firstname" class="col-sm-2 control-label" >模块</label>
-		<div class="col-sm-2">
-			<label for="firstname" class="col-sm-6 control-label" style="text-align:left">{{languageCode.moduleName}}</label>
-		</div>
-	</div>
-  <div class="form-group">
-		<label for="firstname" class="col-sm-2 control-label">Key</label>
-		<div class="col-sm-2">
-			<label for="firstname" class="col-sm-2 control-label">{{languageCode.positionKey}}</label>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="firstname" class="col-sm-2 control-label">CN</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control"  id="cn"  v-model="languageCode.cn"
-				   placeholder="请输入名字">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">TW</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="tw"  v-model="languageCode.tw"
-				   placeholder="请输入姓">
-		</div>
-	</div>
+  <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
 
-  <div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">HK</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="hk"  v-model="languageCode.hk"
-				   placeholder="请输入姓">
-		</div>
-	</div>
+		<FormItem label="产品" prop="positionKey" >
+      <Row :gutter="6">
+				<Col span="5">
+          <Input v-model="positionKey"  placeholder="请输入key"></Input>
+        </Col>
+      </Row>
+    </FormItem>
+		<FormItem label="Key" >
+      <Row :gutter="6">
+        <Col  span="5">
+					<Input v-model="productName"  placeholder="请输入key" readonly></Input>
+        </Col>
+      </Row>
+    </FormItem>
 
-  <div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">EN</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="en"  v-model="languageCode.en"
-				   placeholder="请输入姓">
-		</div>
-	</div>
+		<FormItem v-for="item in languageCodeList" v-bind:label="item.languageCode" >
+      <Row :gutter="6">
+        <Col  span="5">
+					<Input v-model="item.value"  placeholder="请输入key" readonly></Input>
+        </Col>
+      </Row>
+    </FormItem>
 
-  <div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">IT</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="it"  v-model="languageCode.it"
-				   placeholder="请输入姓">
-		</div>
-	</div>
+    <FormItem label="语言" prop="languageCode">
+      <Row :gutter="6">
+        <Col push="0" span="5">
+          <Select v-model="formValidate.languageCode" placeholder="选择语言" :label-width="20">
+            <Option v-for="item in languageList" :value="item.key" :key="item.key" >{{item.name}}</Option>
+          </Select>
+        </Col>
 
-  <div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">ES</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="es"  v-model="languageCode.es"
-				   placeholder="请输入姓">
-		</div>
-	</div>
+        <Col span="5">
+          <Input v-model="formValidate.value" placeholder="请输入key"></Input>
+        </Col>
+        <Col span="1">
+          <!-- <Button type="primary" @click="handleSubmit('formValidate')">添加</Button> -->
+        </Col>
+      </Row>
+    </FormItem>
 
-  <div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">EU</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="eu"  v-model="languageCode.eu"
-				   placeholder="请输入姓">
-		</div>
-	</div>
-
-
-
-
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-2">
-			<button type="submit" class="btn btn-default">更新</button>
-		</div>
-	</div>
-</form>
+    <FormItem>
+      <Row :gutter="6">
+        <Col push="0" span="5">
+          <Button type="primary" @click="handleSubmit('formValidate')">创建</Button>
+          <Icon custom="i-icon i-icon-shop_fill" size="24"/>
+          <!-- <Button @click="handleReset('formValidate')" style="margin-left: 8px">清空</Button> -->
+        </Col>
+      </Row>
+    </FormItem>
+  </Form>
 </template>
-
 <script>
 import axios from "axios";
 export default {
-  name: "LanguageEdit",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
-      user: {
-        name: "尹志强",
-        age: 100
-      },
-      languageCode: {},
-      productList:[],
-      moduleList:[],
-      productText:"产品",
-      moduleText:"模块",
-      param:"",
-      productId:"",
-      moduleId:"",
-      id:this.$route.params.id
-
+      formValidate: {
+        name: "",
+        value: "",
+        mail: "",
+        productId: "",
+        gender: "",
+        interest: [],
+        date: "",
+        time: "",
+        desc: "",
+				languageCode:"",
+				positionKey:this.$route.params.positionKey,
+			},
+			positionKey: this.$route.params.positionKey,
+			productName: this.$route.params.productName,
+			languageList: [],
+			languageCodeList: [],
+      activeName: "1-1",
+      pathName: "创建字串",
+      ruleValidate: {
+        key1: [{ required: true, message: "请选择产品", trigger: "change" }],
+        languageCode: [
+          { required: true, message: "请选择语言", trigger: "change" }
+        ],
+        value: [
+          { required: true, message: "请输入", trigger: "blur" }
+        ],
+        desc: [
+          { message: "Please enter a personal introduction", trigger: "blur" },
+          {
+            type: "string",
+            min: 2,
+            message: "Introduce no less than 2 words",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
-  mounted: function() {
-
-    const self = this;
-
-    axios.post(
-        "http://localhost:8081/iot/language/languageView",
-        { id: self.id },
-        {
-          headers: { "Content-Type": "application/json" }
+  methods: {
+    handleSubmit(name) {
+      const self = this;
+      console.log(this.formValidate);
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          console.log(this.formValidate);
+          axios({
+            method: "post",
+            url: "http://localhost:8081/iot/language/addLanguageCodeByCn",
+            params: this.formValidate
+          })
+            .then(function(resp) {
+              console.log(resp.data);
+              if (resp.data.code == "000000") {
+								self.languageCodeList = resp.data.data;
+                self.$Message.success(resp.data.message);
+              } else {
+                self.$Message.error(resp.data.message);
+              }
+            })
+            .catch(resp => {
+              console.log("请求失败：" + resp.status + "," + resp.statusText);
+            });
+        } else {
+          this.$Message.error("Fail!");
         }
-      )
+      });
+    },
+    handleReset(name) {
+      this.$refs[name].resetFields();
+		},
+		// listByCode(){
+		// 	axios.post("http://localhost:8081/iot/language/listByCode?code="+self.positionKey)
+    //   .then(function(resp) {
+    //     self.languageCodeList = resp.data.data;
+    //     console.log(self.languageCodeList);
+    //   })
+    //   .catch(resp => {
+    //     console.log("请求失败：" + resp.status + "," + resp.statusText);
+    //   });
+		// }
+
+  },
+  mounted: function() {
+    this.$router.push({
+      name: "LanguageEdit",
+      query: { index: 1, pathName: "编辑字串" }
+		});
+
+		// listByCode();
+
+		axios.post("http://localhost:8081/iot/language/listByCode?code="+this.positionKey)
       .then(function(resp) {
-        console.log(resp.data.data[0]);
-        self.languageCode = resp.data.data[0];
+        self.languageCodeList = resp.data.data;
+        console.log(self.languageCodeList);
       })
       .catch(resp => {
         console.log("请求失败：" + resp.status + "," + resp.statusText);
-    });
-  },
-  methods: {
-    updateCode(e){
-      const self = this;
-      console.log(this.languageCode);
+      });
 
-      axios({
-        method: 'post',
-        url:"http://localhost:8081/iot/language/updateLanguageCode",
-        params: this.languageCode
+		
 
-      }).then(function(resp) {
-        console.log(resp.data);
-				self.$Message.success(resp.data.message);
-        // self.languageCode = resp.data.data[0];
-      }).catch(resp => {
+
+    const self = this;
+    axios.post("http://localhost:8081/iot/language/languageList")
+      .then(function(resp) {
+        self.languageList = resp.data.data;
+        console.log(self.languageList);
+      })
+      .catch(resp => {
         console.log("请求失败：" + resp.status + "," + resp.statusText);
       });
-      
-    },
-
-  }
+	}
 };
 </script>

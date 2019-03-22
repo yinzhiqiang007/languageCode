@@ -52,10 +52,6 @@
               </li>
             </ul>
 
-
-
-
-
           </div>
         </nav>
 
@@ -76,14 +72,9 @@
               <td>{{item.productName}}</td>
 
               <td   v-for="titleItem in titleList"  >{{item[titleItem.key]}}</td>
-              <!-- <td>{{item.en}}</td>
-              <td>{{item.it}}</td>
-              <td>{{item.tw}}</td>
-              <td>{{item.eu}}</td>
-              <td>{{item.es}}</td>
-              <td>{{item.hk}}</td> -->
+
               <td>
-              <router-link target="_blank" :to="{ name: 'LanguageEdit', params: { id: item.id }}">编辑</router-link>
+              <router-link target="_blank" :to="{ name: 'LanguageEdit', params: { positionKey: item.positionKey,productName:item.productName}}">编辑</router-link>
               </td>
 
               
@@ -120,7 +111,7 @@
 import axios from "axios";
 export default {
   
-  name: "HelloWorld",
+  name: "LanguageView",
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
@@ -146,6 +137,11 @@ export default {
     };
   },
   mounted: function() {
+    this.$router.push({
+      name: "LanguageView",
+      query: { index: 1, pathName: "字串列表" }
+		});
+
     const self = this;
     axios.post(
         "/language/languageView",
@@ -182,23 +178,6 @@ export default {
     aaaaa(index){
       this.pageSize= index;
     },
-
-    // checkModule(id,name){
-    //   const self = this;
-    //   this.productId=id;
-    //   axios.post(
-    //     "/language/listByModule?productId="+id
-    //   )
-    //   .then(function(resp) {
-    //     self.moduleList = resp.data.data;
-    //     console.log(self.moduleList);
-    //     self.productText = name;
-        
-    //   })
-    //   .catch(resp => {
-    //     console.log("请求失败：" + resp.status + "," + resp.statusText);
-    //   });
-    // },
     checkCode(id,name){
       const self = this;
       if(id != null){
