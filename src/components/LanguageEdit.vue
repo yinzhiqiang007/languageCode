@@ -4,7 +4,7 @@
 		<FormItem label="产品" prop="positionKey" >
       <Row :gutter="6">
 				<Col span="5">
-          <Input v-model="positionKey"  placeholder="请输入key"></Input>
+          <Input v-model="positionKey"  placeholder="请输入key" readonly></Input>
         </Col>
       </Row>
     </FormItem>
@@ -112,6 +112,8 @@ export default {
               console.log(resp.data);
               if (resp.data.code == "000000") {
 								self.languageCodeList = resp.data.data;
+								// self.languageCodeList.push.apply(self.languageCodeList,resp.data.data);
+								console.log("=========="+self.languageCodeList);
                 self.$Message.success(resp.data.message);
               } else {
                 self.$Message.error(resp.data.message);
@@ -128,16 +130,6 @@ export default {
     handleReset(name) {
       this.$refs[name].resetFields();
 		},
-		// listByCode(){
-		// 	axios.post("http://localhost:8081/iot/language/listByCode?code="+self.positionKey)
-    //   .then(function(resp) {
-    //     self.languageCodeList = resp.data.data;
-    //     console.log(self.languageCodeList);
-    //   })
-    //   .catch(resp => {
-    //     console.log("请求失败：" + resp.status + "," + resp.statusText);
-    //   });
-		// }
 
   },
   mounted: function() {
