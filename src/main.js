@@ -11,7 +11,7 @@ import 'iview/dist/styles/iview.css'
 // Vue.use(VueResource);
 Vue.use(iView);
 
-axios.defaults.baseURL = "http://localhost:8081/iot/"
+axios.defaults.baseURL = "http://10.10.3.43:8081/iot/"
 
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios

@@ -83,7 +83,7 @@
           </tbody>
         </table>
         <!-- <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator /> -->
-        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导出字串表</router-link></button>
+        <button type="button" @click="exportExcel()" class="btn btn-default">导出字串表</button>
         <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导入字串表</router-link></button>
 
         <!-- <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'ModuleEdit'}">创建模块</router-link></button>
@@ -176,6 +176,20 @@ export default {
     aaaaa(index){
       this.pageSize= index;
     },
+    // 下载文件
+    download (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '字串列表.xlsx')
+        
+        document.body.appendChild(link)
+        link.click()
+    },
     checkCode(id,name){
       const self = this;
 
@@ -201,6 +215,20 @@ export default {
         .catch(resp => {
           console.log("请求失败：" + resp.status + "," + resp.statusText);
       });
+
+    },
+    exportExcel(){
+      const self = this;
+      axios({
+            method: 'post',
+            url: '/language/downLoadExcel',
+            data: { param:self.param,"productId":self.productId },
+            responseType: 'blob'
+        }).then(response => {
+            this.download(response.data)
+        }).catch((error) => {
+
+        })
 
     }
     

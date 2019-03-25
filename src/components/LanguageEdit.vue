@@ -105,7 +105,7 @@ export default {
           console.log(this.formValidate);
           axios({
             method: "post",
-            url: "http://localhost:8081/iot/language/addLanguageCodeByCn",
+            url: "/language/addLanguageCodeByCn",
             params: this.formValidate
           })
             .then(function(resp) {
@@ -140,7 +140,7 @@ export default {
 
 		// listByCode();
 
-		axios.post("http://localhost:8081/iot/language/listByCode?code="+this.positionKey)
+		axios.post("/language/listByCode?code="+this.positionKey)
       .then(function(resp) {
         self.languageCodeList = resp.data.data;
         console.log(self.languageCodeList);
@@ -153,7 +153,7 @@ export default {
 
 
     const self = this;
-    axios.post("http://localhost:8081/iot/language/languageList")
+    axios.post("/language/languageList")
       .then(function(resp) {
         self.languageList = resp.data.data;
         console.log(self.languageList);
