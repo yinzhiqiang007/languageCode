@@ -18,6 +18,7 @@
                   {{productText}}<strong class="caret"></strong>
                 </a>
                 <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0)" @click="checkCode('','全部产品')" >全部产品</a></li>
                   <li v-for="item in productList">
                     <a href="javascript:void(0)" @click="checkCode(item.id,item.name)"   >{{item.name}}</a>
                   </li>
@@ -49,7 +50,7 @@
 
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <router-link target="_blank" :to="{ name: 'LanguageAdd'}">创建字串</router-link>
+                <router-link  :to="{ name: 'LanguageAdd'}">创建字串</router-link>
               </li>
             </ul>
 
@@ -70,12 +71,14 @@
           <tbody>
             <tr v-for="item in list">
               <td>{{item.positionKey}}</td>
-              <td>{{item.productName}}</td>
+              <td>{{item.productName}}
+                
+                <tag v-for="p in item.productList">{{p.name}}</tag></td>
 
               <td   v-for="titleItem in titleList"  >{{item[titleItem.key]}}</td>
 
               <td>
-              <router-link target="_blank" :to="{ name: 'LanguageEdit', params: { positionKey: item.positionKey,productName:item.productName}}">编辑</router-link>
+              <router-link  :to="{ name: 'LanguageEdit', params: { positionKey: item.positionKey}}">编辑</router-link>
               </td>
 
               
@@ -83,25 +86,18 @@
           </tbody>
         </table>
         <!-- <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator /> -->
-        <button type="button" @click="exportExcel()" class="btn btn-default">导出字串表</button>
-        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'LanguageView'}">导入字串表</router-link></button>
-
-        <!-- <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'ModuleEdit'}">创建模块</router-link></button>
-        <button type="button" class="btn btn-default"><router-link target="_blank" :to="{ name: 'KeyEdit'}">创建Key</router-link></button>
-        <div class="btn-group btn-group-lg">
-            <button class="btn btn-default" type="button">
-              <em class="glyphicon glyphicon-heart"></em> 左
-            </button>
-            <button class="btn btn-default" type="button">
-              <em class="glyphicon glyphicon-align-center"></em> 中
-            </button>
-            <button class="btn btn-default" type="button">
-              <em class="glyphicon glyphicon-align-right"></em> 右
-            </button>
-            <button class="btn btn-default" type="button">
-              <em class="glyphicon glyphicon-align-justify"></em> 全
-            </button>
-          </div> -->
+        <!-- <button type="button" @click="exportExcel()" class="btn btn-default">导出字串表</button> -->
+        <Row :gutter="1">
+        <Col  span="3">
+					<Button @click="exportExcel()" icon="ios-cloud-download-outline">导出字串表</Button>
+        </Col>
+        <Col  span="1">
+					<Upload  name="file" :format="['xls','xlsx']" :on-format-error="handleFormatError" accept=".xlsx,.xls" v-bind:action="uploadUrl" :on-success="sss">
+              <Button icon="ios-cloud-upload-outline">导入字串表</Button>
+          </Upload>
+        </Col>
+      </Row>
+      
 
       </div>
     </div>
@@ -123,7 +119,7 @@ export default {
       list: [],
       titleList: [],
       productList:[],
-      productText:"产品",
+      productText:"全部产品",
       param:"",
       productId:"",
       activeName:"1-1",
@@ -131,6 +127,7 @@ export default {
       current:1,
       pageSize:10,
       total:0,
+      uploadUrl:axios.defaults.baseURL+"/language/importExcel",
 
     };
   },
@@ -170,6 +167,13 @@ export default {
     });
   },
   methods: {
+    handleFormatError(){
+      this.$Message.error("请选择文件类型xlsx，xls");
+    },
+    sss(e){
+      console.log(e.code);
+      this.$Message.success("success");
+    },
     ddddd(index){
       this.current= index;
     },
