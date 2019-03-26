@@ -14,7 +14,7 @@
           <Tag v-for="item in productList" :key="item.id" :name="item.id" closable @on-close="handleClose">{{ item.name }}</Tag>
     			<!-- <Button icon="ios-add" type="dashed" size="small" @click="handleAdd">添加标签</Button> -->
 					<Poptip placement="right" width="400">
-						<Button>添加标签</Button>
+						<Button>添加产品</Button>
 						<div class="api" slot="content">
 								<Button  v-for="item in productListAll" :key="item.id" :name="item.id" icon="ios-add" type="dashed" size="small" @click="handleAdd(item.id,item.name)">{{ item.name }}</Button>
 
@@ -91,7 +91,7 @@ export default {
 			productList: [],
 			productListAll: [],
       activeName: "1-1",
-      pathName: "创建字串",
+      pathName: "编辑字串",
       ruleValidate: {
         key1: [{ required: true, message: "请选择产品", trigger: "change" }],
         languageCode: [

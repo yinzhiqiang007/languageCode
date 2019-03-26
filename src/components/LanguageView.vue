@@ -85,7 +85,7 @@
             </tr>
           </tbody>
         </table>
-        <!-- <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator /> -->
+        <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator />
         <!-- <button type="button" @click="exportExcel()" class="btn btn-default">导出字串表</button> -->
         <Row :gutter="1">
         <Col  span="3">
