@@ -8,41 +8,53 @@
             <ul class="nav navbar-nav">
               <!-- <li class="active">
                 <a href="#">Link</a>
-              </li>
-              <li>
+              </li> -->
+              <!-- <li>
                 <a href="#">Link</a>
               </li> -->
+
+              
 
               <li class="dropdown">
                 <a href="javascript:void(0)"  class="dropdown-toggle" v-model="productId" data-toggle="dropdown">
                   {{productText}}<strong class="caret"></strong>
                 </a>
+
                 <ul class="dropdown-menu">
-                  <li><a href="javascript:void(0)" @click="checkCode('','全部产品')" >全部产品</a></li>
+
+                  <!-- <li><a href="javascript:void(0)" @click="checkCode('','全部')" >全部</a></li>
                   <li v-for="item in productList">
                     <a href="javascript:void(0)" @click="checkCode(item.id,item.name)"   >{{item.name}}</a>
+                  </li> -->
+
+
+                <CheckboxGroup v-model="checkProductGroup" @on-change="checkAllProductGroupChange">
+                  <li v-for="item in productList">
+                  <Row >
+                    <Col><Checkbox :label="item.id">{{item.name}}</Checkbox></Col>
+                  </Row>
                   </li>
+                </CheckboxGroup>
+
                 </ul>
               </li>
 
-              <!-- <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  {{moduleText}}
-                  <strong class="caret"></strong>
-                </a>
-                <ul class="dropdown-menu">
-                  <li v-for="item in moduleList">
-                    <a href="javascript:void(0)" @click="checkCode(item.id,item.name)" >{{item.name}}</a>
-                  </li>
-  
-                </ul>
-              </li> -->
-
             </ul>
+            
 
             <form class="navbar-form navbar-left" role="search">
               <div class="form-group">
-                <input type="text" class="form-control" v-model="param"  >
+                <!-- <input type="text" class="form-control" v-model="param"  > -->
+                <AutoComplete
+                    icon="ios-search"
+                    v-model="param"
+                    :data="keywordList"
+                    :filter-method="filterMethod"
+                    @on-change="handleKeyUp"
+                    @on-search="checkCode(null,null)"
+                    placeholder="input here"
+                    style="width:200px">
+                </AutoComplete>
               </div>
               <button type="button" class="btn btn-default" @click="checkCode(null,null)" >查询</button>
             </form>
@@ -72,9 +84,7 @@
             <tr v-for="item in list">
               <td>{{item.positionKey}}</td>
               <td>{{item.productName}}
-                
                 <tag v-for="p in item.productList">{{p.name}}</tag></td>
-
               <td   v-for="titleItem in titleList"  >{{item[titleItem.key]}}</td>
 
               <td>
@@ -119,7 +129,9 @@ export default {
       list: [],
       titleList: [],
       productList:[],
-      productText:"全部产品",
+      keywordList:[],
+      checkProductGroup:[],
+      productText:"请选择",
       param:"",
       productId:"",
       activeName:"1-1",
@@ -138,22 +150,7 @@ export default {
 		});
 
     const self = this;
-    axios.post(
-        "/language/languageView",
-        { param: "" },
-        {
-          headers: { "Content-Type": "application/json" }
-        }
-      )
-      .then(function(resp) {
-        console.log(resp.data.data);
-        self.list = resp.data.data.data;
-        self.titleList = resp.data.data.title;
-        // self.total = self.list.length
-      })
-      .catch(resp => {
-        console.log("请求失败：" + resp.status + "," + resp.statusText);
-    });
+    this.checkCode(null,null);
 
     axios.post(
       "/language/listByProduct"
@@ -165,8 +162,30 @@ export default {
     .catch(resp => {
       console.log("请求失败：" + resp.status + "," + resp.statusText);
     });
+    
   },
   methods: {
+    checkAllProductGroupChange(data){
+      this.checkCode(null,null);
+      console.log(this.checkProductGroup)
+    },
+    handleKeyUp(){
+      const self = this;
+      axios.post(
+        "/language/keywordList?param="+self.param
+      )
+      .then(function(resp) {
+        console.log(self.keywordList);
+        self.keywordList = resp.data.data;
+        
+      })
+      .catch(resp => {
+        console.log("请求失败：" + resp.status + "," + resp.statusText);
+      });
+    },
+    filterMethod (value, option) {
+        return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
+    },
     handleFormatError(){
       this.$Message.error("请选择文件类型xlsx，xls");
     },
@@ -176,9 +195,11 @@ export default {
     },
     ddddd(index){
       this.current= index;
+      this.checkCode(null,null);
     },
     aaaaa(index){
       this.pageSize= index;
+      this.checkCode(null,null);
     },
     // 下载文件
     download (data) {
@@ -205,21 +226,20 @@ export default {
       }
       axios.post(
           "/language/languageView",
-          { param:self.param,"productId":self.productId },
+          { param:self.param,"productId":self.productId,"pageNum":self.current,"pageSize":self.pageSize,"checkProductGroup":self.checkProductGroup },
           {
             headers: { "Content-Type": "application/json" }
           }
         )
         .then(function(resp) {
           console.log(resp.data.data);
-          // self.list = resp.data.data;
-          self.list = resp.data.data.data;
-          // self.titleList = resp.data.data.title;
+          self.list = resp.data.data.data.list;
+          self.titleList = resp.data.data.title;
+          self.total= resp.data.data.data.total;
         })
         .catch(resp => {
           console.log("请求失败：" + resp.status + "," + resp.statusText);
       });
-
     },
     exportExcel(){
       const self = this;

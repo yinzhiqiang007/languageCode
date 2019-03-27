@@ -23,7 +23,7 @@
               <div class="form-group">
                 <input type="text" class="form-control" v-model="param"  >
               </div>
-              <button type="button" class="btn btn-default" @click="checkCode(null,null)" >查询</button>
+              <button type="button" class="btn btn-default" @click="checkCode()" >查询</button>
             </form>
 
             <ul class="nav navbar-nav navbar-right">
@@ -41,7 +41,6 @@
             <tr>
               <th class=" text-center">Key</th>
               <th class=" text-center">名称</th>
-              <th class=" text-center">产品</th>
               <th class=" text-center">级别</th>
               <th class=" text-center">编辑</th>
             </tr>
@@ -50,7 +49,6 @@
             <tr v-for="item in list">
               <td>{{item.code}}</td>
               <td>{{item.name}}</td>
-              <td>{{item.productName}}</td>
               <td>{{item.level}}</td>
 
               <td>
@@ -61,7 +59,8 @@
             </tr>
           </tbody>
         </table>
-        <!-- <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator /> -->
+        <Page v-bind:total="total" :page-size="pageSize" @on-change="ddddd" @on-page-size-change="aaaaa" show-sizer show-elevator />
+      
 
       </div>
     </div>
@@ -101,18 +100,7 @@ export default {
 		});
 
     const self = this;
-    axios.post(
-        "/language/keyList",
-        { param: "" }
-      )
-      .then(function(resp) {
-        console.log(resp.data.data);
-        self.list = resp.data.data;
-        self.total = self.list.length
-      })
-      .catch(resp => {
-        console.log("请求失败：" + resp.status + "," + resp.statusText);
-    });
+    this.checkCode();
 
     axios.post(
       "/language/listByProduct"
@@ -126,17 +114,24 @@ export default {
     });
   },
   methods: {
-   
-    checkCode(id,name){
+    ddddd(index){
+      this.current= index;
+      this.checkCode();
+    },
+    aaaaa(index){
+      this.pageSize= index;
+      this.checkCode();
+    },
+    checkCode(){
       const self = this;
-      
       axios({
           url:"/language/keyList",
-          params:{"code":self.param }
+          params:{"code":self.param ,"pageNum":self.current,"pageSize":self.pageSize}
         })
         .then(function(resp) {
           console.log(resp.data.data);
-          self.list = resp.data.data;
+          self.list = resp.data.data.list;
+          self.total= resp.data.data.total;
         })
         .catch(resp => {
           console.log("请求失败：" + resp.status + "," + resp.statusText);

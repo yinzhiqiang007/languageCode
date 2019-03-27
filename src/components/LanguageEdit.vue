@@ -17,7 +17,6 @@
 						<Button>添加产品</Button>
 						<div class="api" slot="content">
 								<Button  v-for="item in productListAll" :key="item.id" :name="item.id" icon="ios-add" type="dashed" size="small" @click="handleAdd(item.id,item.name)">{{ item.name }}</Button>
-
 						</div>
 				</Poptip>
 

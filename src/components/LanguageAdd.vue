@@ -157,7 +157,6 @@ export default {
   },
   methods: {
     filterMethod (value, option) {
-      console.log(value);
         return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
     },
 		handleAdd(id,name) {
